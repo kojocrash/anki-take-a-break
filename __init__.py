@@ -6,6 +6,10 @@
 #      if you don't want to use this addon then don't,
 #      there are other similiar addons
 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 
 from aqt import mw
 from aqt.utils import showInfo
@@ -37,8 +41,13 @@ def postpone():
 
     # If boxes found
     if drop_down and spin_box:
+
         deck = drop_down.currentText()
         days = spin_box.value()
+
+        # Postpone all decks at once
+        if deck == "All Decks":
+            deck = "*"
 
         # Filter cards that are in the deck and are due to review
         card_ids = mw.col.find_cards('"deck:%s" "is:due"' % deck)
@@ -92,6 +101,9 @@ def  window_init():
 
     # Label on top
     layout.addWidget(label)
+
+    # Postpone all decks option
+    drop_down.addItem("All Decks")
 
     # Decks in the dropdown menu
     for deck in mw.col.decks.all_names_and_ids():
