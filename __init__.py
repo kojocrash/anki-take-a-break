@@ -50,11 +50,11 @@ def postpone():
             deck = "*"
 
         # Filter cards that are in the deck and are due to review
-        card_ids = mw.col.find_cards('"deck:%s" "is:due"' % deck)
+        card_ids = mw.col.find_cards('"deck:%s" "prop:due>=0"' % deck)
 
         for id in card_ids:
             # Find the coresponding card
-            card = mw.col.getCard(id)
+            card = mw.col.get_card(id)
 
             # If it is in review que postpone it by x days
             if card.queue == QUEUE_TYPE_REV:
